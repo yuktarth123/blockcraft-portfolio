@@ -1,30 +1,9 @@
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Settings } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import heroLandscape from "@/assets/hero-landscape.jpg";
 import avatarPixel from "@/assets/avatar-pixel.png";
-import { supabase } from "@/integrations/supabase/client";
-import { Link } from "react-router-dom";
 
 const Hero = () => {
-  const [tagline, setTagline] = useState("Crafting Digital Experiences, One Block at a Time");
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const { data } = await supabase
-        .from("profile_content")
-        .select("tagline")
-        .limit(1)
-        .maybeSingle();
-
-      if (data?.tagline) {
-        setTagline(data.tagline);
-      }
-    };
-
-    fetchProfile();
-  }, []);
-
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
@@ -58,7 +37,7 @@ const Hero = () => {
           </p>
           
           <p className="text-base md:text-lg max-w-2xl mx-auto mb-12 text-foreground/80 font-sans">
-            {tagline}
+            Crafting Digital Experiences, One Block at a Time
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -87,14 +66,6 @@ const Hero = () => {
         >
           <ArrowDown size={32} />
         </button>
-
-        <Link
-          to="/auth"
-          className="absolute top-8 right-8 p-2 rounded-lg bg-muted/50 hover:bg-muted border-2 border-border transition-all block-shadow hover:block-shadow-hover"
-          aria-label="Admin login"
-        >
-          <Settings className="w-5 h-5 text-primary" />
-        </Link>
       </div>
     </section>
   );

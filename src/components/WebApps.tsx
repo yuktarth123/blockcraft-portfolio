@@ -1,27 +1,38 @@
-import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Code2, Github, ExternalLink } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 
 const WebApps = () => {
-  const [apps, setApps] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchApps = async () => {
-      const { data } = await supabase
-        .from("web_apps")
-        .select("*")
-        .eq("is_published", true)
-        .order("display_order");
-
-      if (data) {
-        setApps(data);
-      }
-    };
-
-    fetchApps();
-  }, []);
+  const apps = [
+    {
+      name: "Engagement Bot",
+      description: "Automated community engagement tool that increased user interactions by 300%.",
+      tech: ["Python", "Discord API", "PostgreSQL"],
+      demo: "#",
+      github: "#",
+    },
+    {
+      name: "Analytics Dashboard",
+      description: "Real-time product analytics dashboard for tracking key metrics and user behavior.",
+      tech: ["React", "D3.js", "Firebase"],
+      demo: "#",
+      github: "#",
+    },
+    {
+      name: "Task Automation Suite",
+      description: "Collection of automation scripts to streamline repetitive product workflows.",
+      tech: ["Node.js", "Puppeteer", "AWS Lambda"],
+      demo: "#",
+      github: "#",
+    },
+    {
+      name: "User Feedback Tool",
+      description: "Lightweight feedback collection widget for embedding in web applications.",
+      tech: ["TypeScript", "React", "Supabase"],
+      demo: "#",
+      github: "#",
+    },
+  ];
 
   return (
     <section id="apps" className="py-20 bg-background">
@@ -59,32 +70,28 @@ const WebApps = () => {
               </div>
 
               <div className="flex gap-3">
-                {app.demo_url && (
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="flex-1 border-2 text-xs font-pixel"
-                    asChild
-                  >
-                    <a href={app.demo_url} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="w-3 h-3 mr-2" />
-                      Demo
-                    </a>
-                  </Button>
-                )}
-                {app.github_url && (
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="flex-1 border-2 text-xs font-pixel"
-                    asChild
-                  >
-                    <a href={app.github_url} target="_blank" rel="noopener noreferrer">
-                      <Github className="w-3 h-3 mr-2" />
-                      Code
-                    </a>
-                  </Button>
-                )}
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="flex-1 border-2 text-xs font-pixel"
+                  asChild
+                >
+                  <a href={app.demo} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="w-3 h-3 mr-2" />
+                    Demo
+                  </a>
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="flex-1 border-2 text-xs font-pixel"
+                  asChild
+                >
+                  <a href={app.github} target="_blank" rel="noopener noreferrer">
+                    <Github className="w-3 h-3 mr-2" />
+                    Code
+                  </a>
+                </Button>
               </div>
             </Card>
           ))}

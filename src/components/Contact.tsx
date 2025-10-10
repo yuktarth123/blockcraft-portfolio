@@ -3,16 +3,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Mail, Linkedin, Github, Send } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
-import { z } from "zod";
-
-const contactSchema = z.object({
-  name: z.string().min(1, "Name is required").max(100),
-  email: z.string().email("Invalid email address").max(255),
-  message: z.string().min(1, "Message is required").max(1000),
-});
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -20,11 +12,18 @@ const Contact = () => {
     email: "",
     message: "",
   });
-  const [socialLinks, setSocialLinks] = useState([
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast.success("Message sent! I'll get back to you soon.");
+    setFormData({ name: "", email: "", message: "" });
+  };
+
+  const socialLinks = [
     {
       icon: <Mail className="w-5 h-5" />,
       label: "Email",
-      href: "mailto:contact@yuktarth.com",
+      href: "mailto:yuktarth@example.com",
       color: "hover:bg-accent/20",
     },
     {
@@ -39,55 +38,7 @@ const Contact = () => {
       href: "https://github.com",
       color: "hover:bg-accent/20",
     },
-  ]);
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const { data } = await supabase
-        .from("profile_content")
-        .select("email, linkedin_url, github_url")
-        .limit(1)
-        .maybeSingle();
-
-      if (data) {
-        setSocialLinks([
-          {
-            icon: <Mail className="w-5 h-5" />,
-            label: "Email",
-            href: `mailto:${data.email || "contact@yuktarth.com"}`,
-            color: "hover:bg-accent/20",
-          },
-          {
-            icon: <Linkedin className="w-5 h-5" />,
-            label: "LinkedIn",
-            href: data.linkedin_url || "https://linkedin.com",
-            color: "hover:bg-accent/20",
-          },
-          {
-            icon: <Github className="w-5 h-5" />,
-            label: "GitHub",
-            href: data.github_url || "https://github.com",
-            color: "hover:bg-accent/20",
-          },
-        ]);
-      }
-    };
-
-    fetchProfile();
-  }, []);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    const validation = contactSchema.safeParse(formData);
-    if (!validation.success) {
-      toast.error(validation.error.errors[0].message);
-      return;
-    }
-
-    toast.success("Message sent! I'll get back to you soon.");
-    setFormData({ name: "", email: "", message: "" });
-  };
+  ];
 
   return (
     <section id="contact" className="py-20 bg-background">
