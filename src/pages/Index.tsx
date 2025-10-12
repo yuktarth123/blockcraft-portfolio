@@ -5,12 +5,12 @@ import WebApps from "@/components/WebApps";
 import Achievements from "@/components/Achievements";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import FloatingBalloons from "@/components/FloatingBalloons";
+import MarioCollectibles from "@/components/FloatingBalloons";
 
 const Index = () => {
   return (
     <main className="min-h-screen">
-      <FloatingBalloons />
+      <MarioCollectibles />
       <Hero />
       <About />
       <Projects />
