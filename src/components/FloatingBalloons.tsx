@@ -252,11 +252,20 @@ const MarioCollectibles = () => {
 
   return (
     <>
-      {/* Score Counter */}
+      {/* Score Counter - Compact retro style */}
       <div className="fixed top-4 right-4 z-50 pointer-events-none">
-        <div className="bg-background/90 border-4 border-primary px-6 py-3 block-shadow">
-          <p className="font-pixel text-xs text-primary">SCORE</p>
-          <p className="font-pixel text-lg text-foreground">{totalScore.toLocaleString()}</p>
+        <div className="bg-black/80 border-2 border-yellow-400 px-3 py-1.5 block-shadow-card">
+          <div className="flex items-center gap-2">
+            <svg viewBox="0 0 16 16" className="w-5 h-5">
+              <rect x="5" y="1" width="6" height="2" fill="hsl(45 100% 50%)" />
+              <rect x="3" y="3" width="2" height="10" fill="hsl(45 100% 50%)" />
+              <rect x="11" y="3" width="2" height="10" fill="hsl(45 100% 50%)" />
+              <rect x="5" y="13" width="6" height="2" fill="hsl(45 100% 50%)" />
+              <rect x="5" y="3" width="6" height="10" fill="hsl(50 100% 60%)" />
+            </svg>
+            <span className="font-pixel text-xs text-yellow-400">×</span>
+            <span className="font-pixel text-sm text-white">{totalScore.toLocaleString()}</span>
+          </div>
         </div>
       </div>
 
