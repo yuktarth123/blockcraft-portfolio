@@ -151,49 +151,100 @@ const MarioCollectibles = () => {
 
   const renderCollectible = (collectible: Collectible) => {
     const size = collectible.size;
-    const pixelSize = size / 8;
 
     switch (collectible.type) {
       case "coin":
         return (
-          <svg viewBox="0 0 8 8" className="w-full h-full">
-            <rect x="2" y="0" width="4" height="1" fill="hsl(var(--minecraft-yellow))" />
-            <rect x="1" y="1" width="6" height="6" fill="hsl(var(--minecraft-yellow))" />
-            <rect x="2" y="7" width="4" height="1" fill="hsl(var(--minecraft-yellow))" />
-            <rect x="3" y="2" width="2" height="4" fill="hsl(45 100% 35%)" />
+          <svg viewBox="0 0 16 16" className="w-full h-full">
+            {/* Outer ring - gold */}
+            <rect x="5" y="1" width="6" height="2" fill="hsl(45 100% 50%)" />
+            <rect x="3" y="3" width="2" height="10" fill="hsl(45 100% 50%)" />
+            <rect x="11" y="3" width="2" height="10" fill="hsl(45 100% 50%)" />
+            <rect x="5" y="13" width="6" height="2" fill="hsl(45 100% 50%)" />
+            
+            {/* Inner fill - yellow */}
+            <rect x="5" y="3" width="6" height="10" fill="hsl(50 100% 60%)" />
+            
+            {/* Highlight */}
+            <rect x="6" y="4" width="3" height="3" fill="hsl(55 100% 80%)" />
+            
+            {/* Shadow/depth */}
+            <rect x="9" y="8" width="2" height="4" fill="hsl(40 100% 35%)" />
+            <rect x="6" y="11" width="4" height="1" fill="hsl(40 100% 35%)" />
           </svg>
         );
       case "star":
         return (
-          <svg viewBox="0 0 8 8" className="w-full h-full">
-            <rect x="3" y="0" width="2" height="1" fill="hsl(var(--minecraft-yellow))" />
-            <rect x="2" y="1" width="4" height="1" fill="hsl(var(--minecraft-yellow))" />
-            <rect x="0" y="2" width="8" height="2" fill="hsl(var(--minecraft-yellow))" />
-            <rect x="1" y="4" width="6" height="2" fill="hsl(var(--minecraft-yellow))" />
-            <rect x="2" y="6" width="4" height="2" fill="hsl(var(--minecraft-yellow))" />
-            <rect x="4" y="2" width="2" height="2" fill="hsl(45 100% 35%)" />
+          <svg viewBox="0 0 16 16" className="w-full h-full">
+            {/* Star shape - bright yellow */}
+            <rect x="7" y="0" width="2" height="2" fill="hsl(50 100% 60%)" />
+            <rect x="5" y="2" width="6" height="2" fill="hsl(50 100% 60%)" />
+            <rect x="3" y="4" width="2" height="2" fill="hsl(50 100% 60%)" />
+            <rect x="11" y="4" width="2" height="2" fill="hsl(50 100% 60%)" />
+            <rect x="1" y="6" width="14" height="2" fill="hsl(50 100% 60%)" />
+            <rect x="3" y="8" width="10" height="2" fill="hsl(50 100% 60%)" />
+            <rect x="5" y="10" width="6" height="2" fill="hsl(50 100% 60%)" />
+            <rect x="5" y="12" width="2" height="2" fill="hsl(50 100% 60%)" />
+            <rect x="9" y="12" width="2" height="2" fill="hsl(50 100% 60%)" />
+            <rect x="7" y="14" width="2" height="2" fill="hsl(50 100% 60%)" />
+            
+            {/* Highlights - white/light yellow */}
+            <rect x="7" y="2" width="2" height="1" fill="hsl(55 100% 85%)" />
+            <rect x="6" y="6" width="4" height="2" fill="hsl(55 100% 75%)" />
+            
+            {/* Shadows - darker yellow */}
+            <rect x="9" y="8" width="3" height="2" fill="hsl(45 100% 40%)" />
+            <rect x="8" y="11" width="2" height="2" fill="hsl(45 100% 40%)" />
           </svg>
         );
       case "mushroom":
         return (
-          <svg viewBox="0 0 8 8" className="w-full h-full">
-            <rect x="2" y="0" width="4" height="1" fill="hsl(var(--minecraft-red))" />
-            <rect x="1" y="1" width="6" height="3" fill="hsl(var(--minecraft-red))" />
-            <rect x="2" y="2" width="1" height="1" fill="white" />
-            <rect x="5" y="2" width="1" height="1" fill="white" />
-            <rect x="2" y="4" width="4" height="4" fill="hsl(45 20% 85%)" />
-            <rect x="3" y="5" width="2" height="2" fill="hsl(45 20% 70%)" />
+          <svg viewBox="0 0 16 16" className="w-full h-full">
+            {/* Red cap */}
+            <rect x="4" y="1" width="8" height="2" fill="hsl(0 85% 55%)" />
+            <rect x="2" y="3" width="12" height="2" fill="hsl(0 85% 55%)" />
+            <rect x="1" y="5" width="14" height="3" fill="hsl(0 85% 55%)" />
+            
+            {/* White spots on cap */}
+            <rect x="4" y="3" width="2" height="2" fill="white" />
+            <rect x="10" y="3" width="2" height="2" fill="white" />
+            <rect x="7" y="5" width="2" height="2" fill="white" />
+            
+            {/* Darker red shading */}
+            <rect x="11" y="5" width="3" height="2" fill="hsl(0 85% 40%)" />
+            
+            {/* Beige/tan stem */}
+            <rect x="5" y="8" width="6" height="7" fill="hsl(30 30% 85%)" />
+            
+            {/* Stem shading */}
+            <rect x="8" y="9" width="2" height="5" fill="hsl(30 25% 70%)" />
+            <rect x="6" y="13" width="4" height="1" fill="hsl(30 25% 70%)" />
+            
+            {/* Stem highlight */}
+            <rect x="5" y="9" width="2" height="3" fill="hsl(30 35% 92%)" />
           </svg>
         );
       case "mystery":
         return (
-          <svg viewBox="0 0 8 8" className="w-full h-full">
-            <rect x="0" y="0" width="8" height="8" fill="hsl(var(--minecraft-yellow))" />
-            <rect x="1" y="1" width="6" height="6" fill="hsl(30 80% 45%)" />
-            <rect x="3" y="2" width="2" height="1" fill="white" />
-            <rect x="3" y="3" width="2" height="1" fill="white" />
-            <rect x="4" y="4" width="1" height="1" fill="white" />
-            <rect x="3" y="5" width="2" height="1" fill="white" />
+          <svg viewBox="0 0 16 16" className="w-full h-full animate-pulse">
+            {/* Outer border - bright yellow */}
+            <rect x="0" y="0" width="16" height="16" fill="hsl(45 100% 50%)" />
+            
+            {/* Orange/brown inner block */}
+            <rect x="2" y="2" width="12" height="12" fill="hsl(30 80% 45%)" />
+            
+            {/* Question mark - white */}
+            <rect x="6" y="4" width="4" height="2" fill="white" />
+            <rect x="8" y="6" width="2" height="2" fill="white" />
+            <rect x="7" y="8" width="2" height="2" fill="white" />
+            <rect x="7" y="11" width="2" height="2" fill="white" />
+            
+            {/* Darker shading on block */}
+            <rect x="11" y="3" width="2" height="10" fill="hsl(25 70% 35%)" />
+            <rect x="3" y="12" width="8" height="1" fill="hsl(25 70% 35%)" />
+            
+            {/* Highlight on block */}
+            <rect x="3" y="3" width="2" height="2" fill="hsl(35 90% 60%)" />
           </svg>
         );
     }
