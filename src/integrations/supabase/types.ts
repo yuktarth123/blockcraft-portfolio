@@ -65,6 +65,11 @@ export type Database = {
           id: string
           linkedin_url: string | null
           resume_url: string | null
+          show_achievements: boolean | null
+          show_projects: boolean | null
+          show_timeline: boolean | null
+          show_webapps: boolean | null
+          show_youtube: boolean | null
           tagline: string | null
           updated_at: string | null
         }
@@ -79,6 +84,11 @@ export type Database = {
           id?: string
           linkedin_url?: string | null
           resume_url?: string | null
+          show_achievements?: boolean | null
+          show_projects?: boolean | null
+          show_timeline?: boolean | null
+          show_webapps?: boolean | null
+          show_youtube?: boolean | null
           tagline?: string | null
           updated_at?: string | null
         }
@@ -93,6 +103,11 @@ export type Database = {
           id?: string
           linkedin_url?: string | null
           resume_url?: string | null
+          show_achievements?: boolean | null
+          show_projects?: boolean | null
+          show_timeline?: boolean | null
+          show_webapps?: boolean | null
+          show_youtube?: boolean | null
           tagline?: string | null
           updated_at?: string | null
         }
@@ -233,6 +248,39 @@ export type Database = {
           name?: string
           tech?: string[]
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      youtube_videos: {
+        Row: {
+          created_at: string | null
+          description: string
+          display_order: number | null
+          id: string
+          is_published: boolean | null
+          title: string
+          updated_at: string | null
+          video_url: string
+        }
+        Insert: {
+          created_at?: string | null
+          description: string
+          display_order?: number | null
+          id?: string
+          is_published?: boolean | null
+          title: string
+          updated_at?: string | null
+          video_url: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string
+          display_order?: number | null
+          id?: string
+          is_published?: boolean | null
+          title?: string
+          updated_at?: string | null
+          video_url?: string
         }
         Relationships: []
       }
