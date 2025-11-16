@@ -10,6 +10,7 @@ import TimelineEditor from "@/components/admin/TimelineEditor";
 import ProjectsEditor from "@/components/admin/ProjectsEditor";
 import WebAppsEditor from "@/components/admin/WebAppsEditor";
 import AchievementsEditor from "@/components/admin/AchievementsEditor";
+import YouTubeEditor from "@/components/admin/YouTubeEditor";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -83,12 +84,13 @@ const Admin = () => {
         </div>
 
         <Tabs defaultValue="profile" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="profile">Profile</TabsTrigger>
             <TabsTrigger value="timeline">Timeline</TabsTrigger>
             <TabsTrigger value="projects">Projects</TabsTrigger>
             <TabsTrigger value="webapps">Web Apps</TabsTrigger>
             <TabsTrigger value="achievements">Achievements</TabsTrigger>
+            <TabsTrigger value="youtube">YouTube</TabsTrigger>
           </TabsList>
 
           <TabsContent value="profile">
@@ -109,6 +111,10 @@ const Admin = () => {
 
           <TabsContent value="achievements">
             <AchievementsEditor />
+          </TabsContent>
+
+          <TabsContent value="youtube">
+            <YouTubeEditor />
           </TabsContent>
         </Tabs>
       </div>

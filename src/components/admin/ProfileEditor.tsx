@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 
 const ProfileEditor = () => {
@@ -168,8 +169,59 @@ const ProfileEditor = () => {
             </div>
           </div>
         </div>
+      </CardContent>
 
-        <Button onClick={handleSave} disabled={loading}>
+      <CardHeader>
+        <CardTitle>Section Visibility</CardTitle>
+        <CardDescription>Toggle which sections appear on your portfolio</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="flex items-center justify-between">
+          <Label htmlFor="show-timeline">Show Timeline</Label>
+          <Switch
+            id="show-timeline"
+            checked={profile.show_timeline ?? true}
+            onCheckedChange={(checked) => setProfile({...profile, show_timeline: checked})}
+          />
+        </div>
+        
+        <div className="flex items-center justify-between">
+          <Label htmlFor="show-projects">Show Projects</Label>
+          <Switch
+            id="show-projects"
+            checked={profile.show_projects ?? true}
+            onCheckedChange={(checked) => setProfile({...profile, show_projects: checked})}
+          />
+        </div>
+        
+        <div className="flex items-center justify-between">
+          <Label htmlFor="show-webapps">Show Web Apps</Label>
+          <Switch
+            id="show-webapps"
+            checked={profile.show_webapps ?? true}
+            onCheckedChange={(checked) => setProfile({...profile, show_webapps: checked})}
+          />
+        </div>
+        
+        <div className="flex items-center justify-between">
+          <Label htmlFor="show-achievements">Show Achievements</Label>
+          <Switch
+            id="show-achievements"
+            checked={profile.show_achievements ?? true}
+            onCheckedChange={(checked) => setProfile({...profile, show_achievements: checked})}
+          />
+        </div>
+        
+        <div className="flex items-center justify-between">
+          <Label htmlFor="show-youtube">Show YouTube Videos</Label>
+          <Switch
+            id="show-youtube"
+            checked={profile.show_youtube ?? true}
+            onCheckedChange={(checked) => setProfile({...profile, show_youtube: checked})}
+          />
+        </div>
+
+        <Button onClick={handleSave} disabled={loading} className="mt-6">
           {loading ? "Saving..." : "Save Changes"}
         </Button>
       </CardContent>
