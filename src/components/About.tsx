@@ -1,41 +1,56 @@
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Briefcase, GraduationCap, Trophy } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const About = () => {
-  const timeline = [
-    {
-      icon: <Briefcase className="w-6 h-6" />,
-      year: "2023 - Present",
-      title: "Senior Product Manager",
-      description: "Leading product strategy and execution for innovative digital solutions.",
-    },
-    {
-      icon: <Briefcase className="w-6 h-6" />,
-      year: "2021 - 2023",
-      title: "Product Manager",
-      description: "Managed cross-functional teams to deliver user-centric products.",
-    },
-    {
-      icon: <GraduationCap className="w-6 h-6" />,
-      year: "2017 - 2021",
-      title: "Education & Foundation",
-      description: "Built foundational knowledge in product development and user experience.",
-    },
-  ];
+  const [profile, setProfile] = useState<any>(null);
+  const [timeline, setTimeline] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchProfile();
+    fetchTimeline();
+  }, []);
+
+  const fetchProfile = async () => {
+    const { data } = await supabase
+      .from("profile_content")
+      .select("*")
+      .maybeSingle();
+    if (data) setProfile(data);
+  };
+
+  const fetchTimeline = async () => {
+    const { data } = await supabase
+      .from("timeline_items")
+      .select("*")
+      .eq("is_published", true)
+      .order("display_order");
+    if (data) setTimeline(data);
+  };
+
+  const getIcon = (iconType: string) => {
+    switch (iconType) {
+      case "briefcase":
+        return <Briefcase className="w-6 h-6" />;
+      case "graduation":
+        return <GraduationCap className="w-6 h-6" />;
+      default:
+        return <Briefcase className="w-6 h-6" />;
+    }
+  };
 
   return (
     <section id="about" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-5xl font-pixel text-center mb-4 text-primary">
-          About Me
+          {profile?.about_title || "About Me"}
         </h2>
         <div className="w-24 h-1 bg-primary mx-auto mb-12 block-shadow" />
         
         <div className="max-w-3xl mx-auto mb-16">
           <p className="text-lg text-center text-foreground/80 leading-relaxed">
-            I'm a Product Manager passionate about building digital experiences that solve real problems. 
-            My approach combines strategic thinking with hands-on execution, treating each project like 
-            crafting in Minecraft—starting with a vision and building it block by block.
+            {profile?.about_text || "I'm a Product Manager passionate about building digital experiences that solve real problems."}
           </p>
         </div>
 
@@ -47,7 +62,7 @@ const About = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 text-primary">
-                {item.icon}
+                {getIcon(item.icon_type)}
               </div>
               <p className="font-pixel text-xs text-accent mb-2">{item.year}</p>
               <h3 className="font-bold text-lg mb-2 text-foreground">{item.title}</h3>
@@ -56,15 +71,19 @@ const About = () => {
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <a 
-            href="#" 
-            className="inline-flex items-center gap-2 px-6 py-3 bg-secondary text-secondary-foreground font-pixel text-xs rounded block-shadow hover:block-shadow-hover transition-all hover:-translate-y-1"
-          >
-            <Trophy className="w-4 h-4" />
-            Download Resume
-          </a>
-        </div>
+        {profile?.resume_url && (
+          <div className="text-center mt-12">
+            <a 
+              href={profile.resume_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-secondary text-secondary-foreground font-pixel text-xs rounded block-shadow hover:block-shadow-hover transition-all hover:-translate-y-1"
+            >
+              <Trophy className="w-4 h-4" />
+              Download Resume
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -1,37 +1,42 @@
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
-import { Trophy, Award, Target, Zap } from "lucide-react";
+import { Trophy, Award, Target, Zap, Rocket, Users, Lightbulb } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Achievements = () => {
-  const achievements = [
-    {
-      icon: <Trophy className="w-8 h-8" />,
-      title: "Product Leader Award",
-      description: "Recognized for exceptional product leadership and innovation",
-      year: "2024",
-      xp: 1000,
-    },
-    {
-      icon: <Award className="w-8 h-8" />,
-      title: "Launch Excellence",
-      description: "Successfully launched 5+ major product features",
-      year: "2023",
-      xp: 850,
-    },
-    {
-      icon: <Target className="w-8 h-8" />,
-      title: "User Impact Champion",
-      description: "Improved user satisfaction score by 45%",
-      year: "2023",
-      xp: 920,
-    },
-    {
-      icon: <Zap className="w-8 h-8" />,
-      title: "Innovation Award",
-      description: "Pioneered AI-powered features that boosted engagement",
-      year: "2022",
-      xp: 780,
-    },
-  ];
+  const [achievements, setAchievements] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchAchievements();
+  }, []);
+
+  const fetchAchievements = async () => {
+    const { data } = await supabase
+      .from("achievements")
+      .select("*")
+      .eq("is_published", true)
+      .order("display_order");
+    if (data) setAchievements(data);
+  };
+
+  const getIcon = (iconType: string) => {
+    switch (iconType) {
+      case "trophy":
+        return <Trophy className="w-8 h-8" />;
+      case "award":
+        return <Award className="w-8 h-8" />;
+      case "target":
+        return <Target className="w-8 h-8" />;
+      case "rocket":
+        return <Rocket className="w-8 h-8" />;
+      case "users":
+        return <Users className="w-8 h-8" />;
+      case "lightbulb":
+        return <Lightbulb className="w-8 h-8" />;
+      default:
+        return <Trophy className="w-8 h-8" />;
+    }
+  };
 
   return (
     <section id="achievements" className="py-20 bg-muted/20">
@@ -50,7 +55,7 @@ const Achievements = () => {
             >
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 text-primary">
-                  {achievement.icon}
+                  {getIcon(achievement.icon_type)}
                 </div>
 
                 <div className="flex-1">

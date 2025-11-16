@@ -1,34 +1,24 @@
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Lightbulb } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Projects = () => {
-  const projects = [
-    {
-      title: "EdTech Platform Redesign",
-      role: "Lead Product Manager",
-      description: "Redesigned the core user experience for 500K+ active learners, resulting in 40% increase in engagement.",
-      metrics: ["40% ↑ Engagement", "25% ↑ Retention", "500K+ Users"],
-      tags: ["UX Research", "A/B Testing", "Analytics"],
-      color: "bg-primary/10 border-primary",
-    },
-    {
-      title: "AI-Powered Recommendation Engine",
-      role: "Product Manager",
-      description: "Built personalized content recommendation system using ML algorithms to boost user satisfaction.",
-      metrics: ["60% ↑ CTR", "35% ↑ Time on Platform"],
-      tags: ["Machine Learning", "Data Science", "Personalization"],
-      color: "bg-accent/10 border-accent",
-    },
-    {
-      title: "Mobile App Launch",
-      role: "Product Owner",
-      description: "Led cross-functional team to launch mobile app from 0 to 1, achieving 100K downloads in first month.",
-      metrics: ["100K Downloads", "4.8★ Rating", "Launch in 3 Markets"],
-      tags: ["Mobile", "Go-to-Market", "Agile"],
-      color: "bg-secondary/10 border-secondary",
-    },
-  ];
+  const [projects, setProjects] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    const { data } = await supabase
+      .from("projects")
+      .select("*")
+      .eq("is_published", true)
+      .order("display_order");
+    if (data) setProjects(data);
+  };
 
   return (
     <section id="projects" className="py-20 bg-muted/20">

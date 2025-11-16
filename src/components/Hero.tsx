@@ -1,9 +1,25 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import heroLandscape from "@/assets/hero-landscape.jpg";
 import avatarPixel from "@/assets/avatar-pixel.png";
 
 const Hero = () => {
+  const [profile, setProfile] = useState<any>(null);
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  const fetchProfile = async () => {
+    const { data } = await supabase
+      .from("profile_content")
+      .select("*")
+      .maybeSingle();
+    if (data) setProfile(data);
+  };
+
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
@@ -23,21 +39,21 @@ const Hero = () => {
       <div className="relative z-10 container mx-auto px-4 py-20 text-center">
         <div className="animate-pixel-fade-in">
           <img 
-            src={avatarPixel} 
-            alt="Yuktarth Nagar Avatar" 
+            src={profile?.hero_avatar_url || avatarPixel} 
+            alt={`${profile?.hero_title || 'Yuktarth Nagar'} Avatar`}
             className="w-32 h-32 mx-auto mb-8 animate-float block-shadow-hover rounded-lg"
           />
           
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-pixel mb-6 text-primary leading-tight">
-            Yuktarth Nagar
+            {profile?.hero_title || "Yuktarth Nagar"}
           </h1>
           
           <p className="text-lg md:text-xl lg:text-2xl font-pixel mb-4 text-secondary">
-            Product Manager
+            {profile?.hero_subtitle || "Product Manager"}
           </p>
           
           <p className="text-base md:text-lg max-w-2xl mx-auto mb-12 text-foreground/80 font-sans">
-            Crafting Digital Experiences, One Block at a Time
+            {profile?.tagline || "Crafting Digital Experiences, One Block at a Time"}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
