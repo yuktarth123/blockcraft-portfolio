@@ -40,10 +40,11 @@ const YouTube = () => {
   return (
     <section className="py-20 bg-muted/30">
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold mb-12 text-center">Music & Creative Work</h2>
+        <h2 className="text-3xl md:text-5xl font-pixel text-center mb-4 text-primary">Freelance Work Gallery</h2>
+        <div className="w-24 h-1 bg-primary mx-auto mb-12 block-shadow" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {videos.map((video) => (
-            <div key={video.id} className="bg-card rounded-lg overflow-hidden border border-border shadow-sm">
+            <div key={video.id} className="bg-card rounded-lg overflow-hidden border-2 border-border block-shadow-card hover:block-shadow-hover transition-all hover:-translate-y-1">
               <div className="aspect-video">
                 <iframe
                   width="100%"

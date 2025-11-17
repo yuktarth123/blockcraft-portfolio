@@ -13,29 +13,32 @@ const Contact = () => {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Message sent! I'll get back to you soon.");
-    setFormData({ name: "", email: "", message: "" });
+    
+    try {
+      const response = await fetch('/api/send-contact-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        toast.success("Message sent! I'll get back to you soon.");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        toast.error("Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      toast.error("Failed to send message. Please try again.");
+    }
   };
 
   const socialLinks = [
     {
-      icon: <Mail className="w-5 h-5" />,
-      label: "Email",
-      href: "mailto:yuktarth@example.com",
-      color: "hover:bg-accent/20",
-    },
-    {
       icon: <Linkedin className="w-5 h-5" />,
       label: "LinkedIn",
       href: "https://linkedin.com",
-      color: "hover:bg-accent/20",
-    },
-    {
-      icon: <Github className="w-5 h-5" />,
-      label: "GitHub",
-      href: "https://github.com",
       color: "hover:bg-accent/20",
     },
   ];
