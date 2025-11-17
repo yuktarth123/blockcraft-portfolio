@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import ProfessionalModeToggle from "./ProfessionalModeToggle";
 
 interface Collectible {
   id: number;
@@ -40,15 +39,6 @@ const MarioCollectibles = () => {
   const [particles, setParticles] = useState<Particle[]>([]);
   const [scorePopups, setScorePopups] = useState<ScorePopup[]>([]);
   const [totalScore, setTotalScore] = useState(0);
-  const [isProfessionalMode, setIsProfessionalMode] = useState(() => {
-    const saved = localStorage.getItem('professionalMode');
-    return saved ? JSON.parse(saved) : false;
-  });
-
-  useEffect(() => {
-    localStorage.setItem('professionalMode', JSON.stringify(isProfessionalMode));
-    document.documentElement.classList.toggle('professional-mode', isProfessionalMode);
-  }, [isProfessionalMode]);
 
   const getRandomType = () => {
     const total = COLLECTIBLE_TYPES.reduce((sum, t) => sum + t.weight, 0);
@@ -262,15 +252,11 @@ const MarioCollectibles = () => {
 
   return (
     <>
-      {/* Score Display and Professional Mode Toggle */}
-      <div className="fixed top-6 right-6 z-50 flex items-center gap-4">
-        <ProfessionalModeToggle 
-          isProfessional={isProfessionalMode}
-          onToggle={setIsProfessionalMode}
-        />
-        <div className="bg-card/90 backdrop-blur-sm border-2 border-border rounded-lg px-4 py-3 flex items-center gap-3 block-shadow-card">
+      {/* Score Counter - Compact retro style */}
+      <div className="fixed top-4 right-4 z-50 pointer-events-none">
+        <div className="bg-black/80 border-2 border-yellow-400 px-3 py-1.5 block-shadow-card">
           <div className="flex items-center gap-2">
-            <svg width="16" height="15" viewBox="0 0 16 15" className="pixelated">
+            <svg viewBox="0 0 16 16" className="w-5 h-5">
               <rect x="5" y="1" width="6" height="2" fill="hsl(45 100% 50%)" />
               <rect x="3" y="3" width="2" height="10" fill="hsl(45 100% 50%)" />
               <rect x="11" y="3" width="2" height="10" fill="hsl(45 100% 50%)" />
@@ -278,7 +264,7 @@ const MarioCollectibles = () => {
               <rect x="5" y="3" width="6" height="10" fill="hsl(50 100% 60%)" />
             </svg>
             <span className="font-pixel text-xs text-yellow-400">×</span>
-            <span className="font-pixel text-sm text-foreground">{totalScore.toLocaleString()}</span>
+            <span className="font-pixel text-sm text-white">{totalScore.toLocaleString()}</span>
           </div>
         </div>
       </div>
