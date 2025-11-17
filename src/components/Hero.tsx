@@ -42,6 +42,8 @@ const Hero = () => {
             src={profile?.hero_avatar_url || avatarPixel} 
             alt={`${profile?.hero_title || 'Yuktarth Nagar'} Avatar`}
             className="w-32 h-32 mx-auto mb-8 animate-float block-shadow-hover rounded-lg"
+            loading="eager"
+            fetchPriority="high"
           />
           
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-pixel mb-6 text-primary leading-tight">
@@ -52,17 +54,17 @@ const Hero = () => {
             {profile?.hero_subtitle || "Product Manager"}
           </p>
           
-          <p className="text-base md:text-lg max-w-2xl mx-auto mb-12 text-foreground/80 font-sans">
+          <p className="text-base md:text-lg max-w-2xl mx-auto mb-8 text-foreground/80 font-sans">
             {profile?.tagline || "Crafting Digital Experiences, One Block at a Time"}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button 
               size="lg" 
-              onClick={() => scrollToSection("projects")}
+              onClick={() => scrollToSection("webapps")}
               className="font-pixel text-xs bg-primary hover:bg-primary/90 text-primary-foreground block-shadow hover:block-shadow-hover transition-all"
             >
-              View Projects
+              Web Apps Gallery
             </Button>
             <Button 
               size="lg" 

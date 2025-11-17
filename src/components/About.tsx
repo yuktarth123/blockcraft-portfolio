@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
-import { Briefcase, GraduationCap, Trophy } from "lucide-react";
+import { Trophy } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import TimelineCarousel from "./TimelineCarousel";
 
 const About = () => {
   const [profile, setProfile] = useState<any>(null);
@@ -29,17 +29,6 @@ const About = () => {
     if (data) setTimeline(data);
   };
 
-  const getIcon = (iconType: string) => {
-    switch (iconType) {
-      case "briefcase":
-        return <Briefcase className="w-6 h-6" />;
-      case "graduation":
-        return <GraduationCap className="w-6 h-6" />;
-      default:
-        return <Briefcase className="w-6 h-6" />;
-    }
-  };
-
   return (
     <section id="about" className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -54,22 +43,7 @@ const About = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {timeline.map((item, index) => (
-            <Card 
-              key={index} 
-              className="p-6 border-2 border-border bg-card block-shadow-card hover:block-shadow-hover transition-all hover:-translate-y-1 animate-pixel-fade-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 text-primary">
-                {getIcon(item.icon_type)}
-              </div>
-              <p className="font-pixel text-xs text-accent mb-2">{item.year}</p>
-              <h3 className="font-bold text-lg mb-2 text-foreground">{item.title}</h3>
-              <p className="text-sm text-foreground/70">{item.description}</p>
-            </Card>
-          ))}
-        </div>
+        <TimelineCarousel items={timeline} />
 
         {profile?.resume_url && (
           <div className="text-center mt-12">
