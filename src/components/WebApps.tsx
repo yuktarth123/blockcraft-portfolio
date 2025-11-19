@@ -21,7 +21,7 @@ const WebApps = () => {
   };
 
   return (
-    <section id="apps" className="py-20 bg-background">
+    <section id="webapps" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-5xl font-pixel text-center mb-4 text-primary">
           Web Apps Gallery
