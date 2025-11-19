@@ -1,4 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { Resend } from "https://esm.sh/resend@2.0.0";
+
+const resend = new Resend(Deno.env.get("RESEND_API_KEY") as string);
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -19,12 +22,24 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { name, email, message }: ContactEmailRequest = await req.json();
 
-    // For now, we'll log the contact form data
-    // You'll need to configure email sending with Resend
     console.log("Contact form submission:", { name, email, message });
 
-    // TODO: Implement Resend email sending
-    // This requires RESEND_API_KEY to be configured
+    // Send email notification to you
+    const emailResponse = await resend.emails.send({
+      from: "Portfolio Contact <onboarding@resend.dev>",
+      to: ["yuktarthnagar@gmail.com"],
+      reply_to: email,
+      subject: `New Portfolio Contact from ${name}`,
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>From:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\n/g, '<br>')}</p>
+      `,
+    });
+
+    console.log("Email sent successfully:", emailResponse);
     
     return new Response(
       JSON.stringify({ success: true, message: "Message received" }),
