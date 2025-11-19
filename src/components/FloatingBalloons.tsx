@@ -51,15 +51,18 @@ const MarioCollectibles = () => {
   };
 
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+    const maxCollectibles = isMobile ? 6 : 12;
+    
     const interval = setInterval(() => {
-      if (Math.random() > 0.6 && collectibles.length < 12) {
+      if (Math.random() > 0.6 && collectibles.length < maxCollectibles) {
         const typeData = getRandomType();
         const newCollectible: Collectible = {
           id: Date.now() + Math.random(),
-          x: Math.random() * (window.innerWidth - 60),
-          y: window.innerHeight + 50,
+          x: Math.random() * 90 + 5, // Use percentage (5% to 95%)
+          y: 110, // Use percentage relative to viewport
           type: typeData.type,
-          size: 50,
+          size: isMobile ? 40 : 50,
           speed: 1.5 + Math.random() * 2,
         };
         setCollectibles((prev) => [...prev, newCollectible]);
@@ -76,9 +79,9 @@ const MarioCollectibles = () => {
           .map((collectible) => ({
             ...collectible,
             y: collectible.y - collectible.speed,
-            x: collectible.x + Math.sin(collectible.y / 40) * 1.5,
+            x: Math.max(0, Math.min(100, collectible.x + Math.sin(collectible.y / 40) * 0.5)),
           }))
-          .filter((collectible) => collectible.y > -100)
+          .filter((collectible) => collectible.y > -15)
       );
 
       setParticles((prev) =>
