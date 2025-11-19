@@ -7,17 +7,20 @@ import avatarPixel from "@/assets/avatar-pixel.png";
 
 const Hero = () => {
   const [profile, setProfile] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchProfile();
   }, []);
 
   const fetchProfile = async () => {
+    setIsLoading(true);
     const { data } = await supabase
       .from("profile_content")
       .select("*")
       .maybeSingle();
     if (data) setProfile(data);
+    setIsLoading(false);
   };
 
   const scrollToSection = (id: string) => {
@@ -38,13 +41,15 @@ const Hero = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-20 text-center">
         <div className="animate-pixel-fade-in">
-          <img 
-            src={profile?.hero_avatar_url || avatarPixel} 
-            alt={`${profile?.hero_title || 'Yuktarth Nagar'} Avatar`}
-            className="w-32 h-32 mx-auto mb-8 animate-float block-shadow-hover rounded-lg"
-            loading="eager"
-            fetchPriority="high"
-          />
+          {!isLoading && (
+            <img 
+              src={profile?.hero_avatar_url || avatarPixel} 
+              alt={`${profile?.hero_title || 'Yuktarth Nagar'} Avatar`}
+              className="w-32 h-32 mx-auto mb-8 animate-float block-shadow-hover rounded-lg"
+              loading="eager"
+              fetchPriority="high"
+            />
+          )}
           
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-pixel mb-6 text-primary leading-tight">
             {profile?.hero_title || "Yuktarth Nagar"}
