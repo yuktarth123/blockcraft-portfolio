@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -24,25 +23,10 @@ const Admin = () => {
 
   const checkAdminAccess = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const adminStatus = localStorage.getItem("isAdmin");
       
-      if (!user) {
+      if (adminStatus !== "true") {
         navigate("/login");
-        return;
-      }
-
-      const { data: hasRole } = await supabase.rpc('has_role', {
-        _user_id: user.id,
-        _role: 'admin'
-      });
-
-      if (!hasRole) {
-        toast({
-          title: "Access Denied",
-          description: "You don't have admin access",
-          variant: "destructive",
-        });
-        navigate("/");
         return;
       }
 
@@ -56,7 +40,7 @@ const Admin = () => {
   };
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
+    localStorage.removeItem("isAdmin");
     navigate("/login");
   };
 
