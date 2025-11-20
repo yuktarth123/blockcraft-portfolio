@@ -52,18 +52,18 @@ const MarioCollectibles = () => {
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
-    const maxCollectibles = isMobile ? 6 : 12;
+    const maxCollectibles = isMobile ? 4 : 12;
     
     const interval = setInterval(() => {
       if (Math.random() > 0.6 && collectibles.length < maxCollectibles) {
         const typeData = getRandomType();
         const newCollectible: Collectible = {
           id: Date.now() + Math.random(),
-          x: Math.random() * 90 + 5, // Use percentage (5% to 95%)
-          y: 110, // Use percentage relative to viewport
+          x: Math.random() * 90 + 5,
+          y: 110,
           type: typeData.type,
-          size: isMobile ? 40 : 50,
-          speed: 1.5 + Math.random() * 2,
+          size: isMobile ? 32 : 50,
+          speed: isMobile ? 2 : 1.5 + Math.random() * 2,
         };
         setCollectibles((prev) => [...prev, newCollectible]);
       }

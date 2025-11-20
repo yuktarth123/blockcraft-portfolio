@@ -45,29 +45,29 @@ const Hero = () => {
             <img 
               src={profile?.hero_avatar_url || avatarPixel} 
               alt={`${profile?.hero_title || 'Yuktarth Nagar'} Avatar`}
-              className="w-32 h-32 mx-auto mb-8 animate-float block-shadow-hover rounded-lg"
+              className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-6 sm:mb-8 animate-float block-shadow-hover rounded-lg"
               loading="eager"
               fetchPriority="high"
             />
           )}
           
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-pixel mb-6 text-primary leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-pixel mb-4 sm:mb-6 text-primary leading-tight px-2">
             {profile?.hero_title || "Yuktarth Nagar"}
           </h1>
           
-          <p className="text-lg md:text-xl lg:text-2xl font-pixel mb-4 text-secondary">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-pixel mb-3 sm:mb-4 text-secondary px-2">
             {profile?.hero_subtitle || "Product Manager"}
           </p>
           
-          <p className="text-base md:text-lg max-w-2xl mx-auto mb-8 text-foreground/80 font-sans">
+          <p className="text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-6 sm:mb-8 text-foreground/80 font-sans px-4">
             {profile?.tagline || "Crafting Digital Experiences, One Block at a Time"}
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4">
             <Button 
               size="lg" 
               onClick={() => scrollToSection("webapps")}
-              className="font-pixel text-xs bg-primary hover:bg-primary/90 text-primary-foreground block-shadow hover:block-shadow-hover transition-all"
+              className="w-full sm:w-auto font-pixel text-xs sm:text-sm bg-primary hover:bg-primary/90 text-primary-foreground block-shadow hover:block-shadow-hover transition-all px-6 py-3"
             >
               Web Apps Gallery
             </Button>
@@ -75,7 +75,7 @@ const Hero = () => {
               size="lg" 
               variant="outline"
               onClick={() => scrollToSection("contact")}
-              className="font-pixel text-xs border-2 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground block-shadow hover:block-shadow-hover transition-all"
+              className="w-full sm:w-auto font-pixel text-xs sm:text-sm border-2 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground block-shadow hover:block-shadow-hover transition-all px-6 py-3"
             >
               Get in Touch
             </Button>
@@ -84,7 +84,7 @@ const Hero = () => {
         
         <button 
           onClick={() => scrollToSection("about")}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-block text-primary hover:text-primary/80 transition-colors"
+          className="hidden sm:block absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-block text-primary hover:text-primary/80 transition-colors"
           aria-label="Scroll to about section"
         >
           <ArrowDown size={32} />
