@@ -30,15 +30,15 @@ const About = () => {
   };
 
   return (
-    <section id="about" className="py-20 bg-background">
+    <section id="about" className="py-12 sm:py-20 bg-background">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-5xl font-pixel text-center mb-4 text-primary">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-pixel text-center mb-3 sm:mb-4 text-primary">
           {profile?.about_title || "About Me"}
         </h2>
-        <div className="w-24 h-1 bg-primary mx-auto mb-12 block-shadow" />
+        <div className="w-16 sm:w-24 h-1 bg-primary mx-auto mb-8 sm:mb-12 block-shadow" />
         
-        <div className="max-w-3xl mx-auto mb-16">
-          <p className="text-lg text-center text-foreground/80 leading-relaxed">
+        <div className="max-w-3xl mx-auto mb-12 sm:mb-16">
+          <p className="text-base sm:text-lg text-center text-foreground/80 leading-relaxed px-2">
             {profile?.about_text || "I'm a Product Manager passionate about building digital experiences that solve real problems."}
           </p>
         </div>
@@ -46,12 +46,12 @@ const About = () => {
         <TimelineCarousel items={timeline} />
 
         {profile?.resume_url && (
-          <div className="text-center mt-12">
+          <div className="text-center mt-8 sm:mt-12">
             <a 
               href={profile.resume_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-secondary text-secondary-foreground font-pixel text-xs rounded block-shadow hover:block-shadow-hover transition-all hover:-translate-y-1"
+              className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-secondary text-secondary-foreground font-pixel text-xs rounded block-shadow hover:block-shadow-hover transition-all hover:-translate-y-1"
             >
               <Trophy className="w-4 h-4" />
               Download Resume
