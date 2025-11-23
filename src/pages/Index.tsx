@@ -47,8 +47,8 @@ const Index = () => {
       {visibility.show_timeline && <About />}
       {visibility.show_projects && <Projects />}
       {visibility.show_webapps && <WebApps />}
-      {visibility.show_youtube && <YouTube />}
       {visibility.show_achievements && <Achievements />}
+      {visibility.show_youtube && <YouTube />}
       <Contact />
       <Footer />
     </main>
