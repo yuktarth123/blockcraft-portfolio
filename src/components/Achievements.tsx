@@ -15,7 +15,7 @@ const Achievements = () => {
       .from("achievements")
       .select("*")
       .eq("is_published", true)
-      .order("display_order");
+      .order("year", { ascending: false }); // Changed sorting to newest first by year
     if (data) setAchievements(data);
   };
 
