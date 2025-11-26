@@ -2,27 +2,27 @@ import { useEffect, useState } from "react";
 
 interface Collectible {
   id: number;
-  x: number;
-  y: number;
+  x: number; // vw unit
+  y: number; // vh unit (representing bottom position)
   type: "coin" | "star" | "mushroom" | "mystery";
-  size: number;
-  speed: number;
+  size: number; // px unit for rendering, but position is vw/vh
+  speed: number; // vh unit per animation frame
 }
 
 interface Particle {
   id: number;
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
+  x: number; // vw unit
+  y: number; // vh unit (representing bottom position)
+  vx: number; // vw unit per frame
+  vy: number; // vh unit per frame
   life: number;
   color: string;
 }
 
 interface ScorePopup {
   id: number;
-  x: number;
-  y: number;
+  x: number; // vw unit
+  y: number; // vh unit (representing bottom position)
   score: number;
   life: number;
 }
@@ -59,11 +59,11 @@ const MarioCollectibles = () => {
         const typeData = getRandomType();
         const newCollectible: Collectible = {
           id: Date.now() + Math.random(),
-          x: Math.random() * 90 + 5,
-          y: 110,
+          x: Math.random() * 90 + 5, // Start between 5vw and 95vw
+          y: -5, // Start slightly below the viewport (bottom: -5vh)
           type: typeData.type,
-          size: isMobile ? 32 : 50,
-          speed: isMobile ? 2 : 1.5 + Math.random() * 2,
+          size: isMobile ? 32 : 50, // Size remains in px for the SVG
+          speed: isMobile ? 0.3 : 0.2 + Math.random() * 0.5, // Speed in vh per frame
         };
         setCollectibles((prev) => [...prev, newCollectible]);
       }
@@ -78,10 +78,10 @@ const MarioCollectibles = () => {
         prev
           .map((collectible) => ({
             ...collectible,
-            y: collectible.y - collectible.speed,
-            x: Math.max(0, Math.min(100, collectible.x + Math.sin(collectible.y / 40) * 0.5)),
+            y: collectible.y + collectible.speed, // Float upwards (increase bottom value)
+            x: Math.max(0, Math.min(100, collectible.x + Math.sin(collectible.y / 10) * 0.2)), // Gentle horizontal sway
           }))
-          .filter((collectible) => collectible.y > -15)
+          .filter((collectible) => collectible.y < 110) // Remove when 10vh above viewport top
       );
 
       setParticles((prev) =>
@@ -90,7 +90,7 @@ const MarioCollectibles = () => {
             ...p,
             x: p.x + p.vx,
             y: p.y + p.vy,
-            vy: p.vy + 0.5,
+            vy: p.vy - 0.05, // Gravity effect (decrease bottom value)
             life: p.life - 1,
           }))
           .filter((p) => p.life > 0)
@@ -100,7 +100,7 @@ const MarioCollectibles = () => {
         prev
           .map((s) => ({
             ...s,
-            y: s.y - 2,
+            y: s.y + 0.5, // Float upwards
             life: s.life - 1,
           }))
           .filter((s) => s.life > 0)
@@ -133,18 +133,18 @@ const MarioCollectibles = () => {
 
     // Create particle explosion
     const colors = {
-      coin: "hsl(var(--minecraft-yellow))",
-      star: "hsl(var(--minecraft-yellow))",
-      mushroom: "hsl(var(--minecraft-red))",
-      mystery: "hsl(var(--primary))",
+      coin: "hsl(45 100% 50%)", // Using HSL values directly
+      star: "hsl(50 100% 60%)",
+      mushroom: "hsl(0 85% 55%)",
+      mystery: "hsl(30 80% 45%)",
     };
 
     const newParticles: Particle[] = Array.from({ length: 12 }, (_, i) => ({
       id: Date.now() + i,
-      x: collectible.x + collectible.size / 2,
-      y: collectible.y + collectible.size / 2,
-      vx: (Math.random() - 0.5) * 8,
-      vy: (Math.random() - 0.5) * 8 - 2,
+      x: collectible.x,
+      y: collectible.y,
+      vx: (Math.random() - 0.5) * 2, // Velocity in vw
+      vy: (Math.random() - 0.5) * 2 + 1, // Velocity in vh (positive for initial upward push)
       life: 30 + Math.random() * 20,
       color: colors[collectible.type],
     }));
@@ -153,8 +153,6 @@ const MarioCollectibles = () => {
   };
 
   const renderCollectible = (collectible: Collectible) => {
-    const size = collectible.size;
-
     switch (collectible.type) {
       case "coin":
         return (
@@ -280,8 +278,8 @@ const MarioCollectibles = () => {
             onClick={() => collectItem(collectible)}
             className="absolute pointer-events-auto cursor-pointer transition-transform hover:scale-110 animate-pulse"
             style={{
-              left: `${collectible.x}px`,
-              top: `${collectible.y}px`,
+              left: `${collectible.x}vw`,
+              bottom: `${collectible.y}vh`,
               width: `${collectible.size}px`,
               height: `${collectible.size}px`,
             }}
@@ -294,10 +292,10 @@ const MarioCollectibles = () => {
         {particles.map((particle) => (
           <div
             key={particle.id}
-            className="absolute w-2 h-2"
+            className="absolute w-2 h-2 rounded-full"
             style={{
-              left: `${particle.x}px`,
-              top: `${particle.y}px`,
+              left: `${particle.x}vw`,
+              bottom: `${particle.y}vh`,
               backgroundColor: particle.color,
               opacity: particle.life / 50,
             }}
@@ -310,8 +308,8 @@ const MarioCollectibles = () => {
             key={popup.id}
             className="absolute font-pixel text-sm text-primary pointer-events-none"
             style={{
-              left: `${popup.x}px`,
-              top: `${popup.y}px`,
+              left: `${popup.x}vw`,
+              bottom: `${popup.y}vh`,
               opacity: popup.life / 60,
               textShadow: "2px 2px 0 hsl(var(--background))",
             }}
