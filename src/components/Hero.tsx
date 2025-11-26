@@ -81,14 +81,6 @@ const Hero = () => {
             </Button>
           </div>
         </div>
-        
-        <button 
-          onClick={() => scrollToSection("about")}
-          className="hidden sm:block absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-block text-primary hover:text-primary/80 transition-colors"
-          aria-label="Scroll to about section"
-        >
-          <ArrowDown size={32} />
-        </button>
       </div>
     </section>
   );
