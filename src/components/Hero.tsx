@@ -28,7 +28,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-20"
@@ -39,7 +39,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
       
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 py-32 text-center">
+      <div className="relative z-10 container mx-auto px-4 py-12 text-center">
         <div className="animate-pixel-fade-in">
           {!isLoading && (
             <img 
